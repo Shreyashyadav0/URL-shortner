@@ -4,7 +4,7 @@ const Url = require('../models/urlModel')
 const createDB = require('../config/db');
 
 //nanoid(version-3) creates unique id (you can use uuid and short id)
-// const { nanoid } = require('nanoid');
+const { nanoid } = import('nanoid');
 
 //add baseUrl as url of website where you host the website + /urlapi
 //baseUrl is http://localhost:PORT/urlapi/ when running locally
@@ -22,6 +22,7 @@ createDB.sync().then(() => console.log('now you can store the data'));
 router.post("/", async (req, res) => {
   try {
     const { longUrl } = req.body;
+    // const shortId = baseUrl+nanoid(4);
      const shortId = Math.random();
     //inserting values 
     const storeUrl = await Url.create({
@@ -41,7 +42,7 @@ router.post("/", async (req, res) => {
 
 //get request 
 router.get('/:short', async (req, res) => {
-  let shortId=req.params.short;
+  let shortId=req.params.short
   //find a values using where
   let url = await Url.findOne({
     where: {
